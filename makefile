@@ -1,20 +1,23 @@
-CXX = g++
+CC = g++
+LIBS = -lm
+SRC = src
+OBJ = obj
+INC = include
+BIN = bin
+OBJS = $(OBJ)/main.o $(OBJ)/grafo.o
+HDRS = $(INC)/grafo.h
+CFLAGS = -Wall -c -I$(INC)
 
-CXXFLAGS = -std=c++11 -Wall
+EXE = $(BIN)/main
 
-TARGET = programa
+$(EXE): $(OBJS)
+	$(CC) -o $(EXE) $(OBJS) $(LIBS)
 
-SOURCES = main.cpp grafo.cpp
+$(OBJ)/main.o: $(SRC)/main.cpp $(HDRS)
+	$(CC) $(CFLAGS) -o $(OBJ)/main.o $(SRC)/main.cpp
 
-OBJECTS = $(SOURCES:.cpp=.o)
-
-all: $(TARGET)
-
-$(TARGET): $(OBJECTS)
-	$(CXX) $(CXXFLAGS) -o $@ $^
-
-%.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+$(OBJ)/grafo.o: $(SRC)/grafo.cpp $(HDRS)
+	$(CC) $(CFLAGS) -o $(OBJ)/grafo.o $(SRC)/grafo.cpp
 
 clean:
-	rm -f $(OBJECTS) $(TARGET)
+	rm -f $(EXE) $(OBJS)
