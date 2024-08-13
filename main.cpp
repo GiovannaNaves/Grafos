@@ -1,31 +1,19 @@
+// main.cpp
 #include <iostream>
-#include <fstream>
-#include <string>
+#include "Grafo.h"
+
 using namespace std;
 
 int main() {
     string filename;
-    int numVertices, numPairs;
+    int vertice;
 
+    cout << "Digite o nome do arquivo: ";
     cin >> filename;
 
-    ifstream file(filename);
+    Grafo grafo(filename);
 
-    if (!file.is_open()) {
-        cerr << "Erro ao abrir o arquivo: " << filename << std::endl;
-        return 1;
-    }
-
-    file >> numVertices >> numPairs;
-
-    vector<int> firstNumbers(numPairs);
-    vector<int> secondNumbers(numPairs);
-
-    for (int i = 0; i < numPairs; ++i) {
-        file >> firstNumbers[i] >> secondNumbers[i];
-    }
-
-    file.close();
+    grafo.exibirGrafo();
 
     return 0;
 }
