@@ -1,4 +1,4 @@
-// Grafo.h
+// grafo.hpp
 #ifndef GRAFO_H
 #define GRAFO_H
 
@@ -15,7 +15,7 @@ private:
 public:
     Grafo(const std::string& filename);
     void carregarGrafo(const std::string& filename);
-    void exibirGrafo();
+    void bubbleSortGrafo(std::vector<int>& vetor);
 };
 
 #endif

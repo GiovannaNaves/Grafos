@@ -5,18 +5,18 @@ OBJ = obj
 INC = include
 BIN = bin
 OBJS = $(OBJ)/main.o $(OBJ)/grafo.o
-HDRS = $(INC)/grafo.h
-CFLAGS = -Wall -c -I$(INC)
+HDRS = $(INC)/grafo.hpp
+CFLAGS = -Wall -c -I$(INC) 
 
 EXE = $(BIN)/main
 
 $(EXE): $(OBJS)
-	$(CC) -o $(EXE) $(OBJS) $(LIBS)
+	$(CC) -o $(EXE) $(OBJS) $(LIBS) 
 
-$(OBJ)/main.o: $(SRC)/main.cpp $(HDRS)
-	$(CC) $(CFLAGS) -o $(OBJ)/main.o $(SRC)/main.cpp
+$(OBJ)/main.o: $(HDRS) $(SRC)/main.cpp 
+	$(CC) $(CFLAGS) -o $(OBJ)/main.o $(SRC)/main.cpp 
 
-$(OBJ)/grafo.o: $(SRC)/grafo.cpp $(HDRS)
+$(OBJ)/grafo.o: $(HDRS) $(SRC)/grafo.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/grafo.o $(SRC)/grafo.cpp
 
 clean:

@@ -1,19 +1,17 @@
 // main.cpp
 #include <iostream>
-#include "Grafo.h"
+#include "grafo.hpp"
 
 using namespace std;
 
 int main() {
     string filename;
-    int vertice;
+    // int vertice;
 
     cout << "Digite o nome do arquivo: ";
     cin >> filename;
 
     Grafo grafo(filename);
-
-    grafo.exibirGrafo();
 
     return 0;
 }
