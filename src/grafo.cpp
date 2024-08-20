@@ -26,7 +26,6 @@ void Grafo::carregarGrafo(const std::string& filename) {
 
     file.close();
     forwardStar(origem, destino);
-
     backwardStar(origem, destino);
 
     std::cout << "Sucessores = " << numSucessores << std::endl;
@@ -42,21 +41,31 @@ void Grafo::carregarGrafo(const std::string& filename) {
 
 }
 
-void Grafo:: bubbleSortGrafo(std::vector<int>& vetor) {
-    int n = vetor.size();
-    for (int i = 0; i < n - 1; i++) {
-        for (int j = 0; j < n - i - 1; j++) {
-            if (vetor[j] > vetor[j + 1]) {
-                int temp = vetor[j];
-                vetor[j] = vetor[j + 1];
-                vetor[j + 1] = temp;
-            }
+int Grafo::particionar(std::vector<int>& vetor, int baixo, int alto) {
+    int pivô = vetor[alto];
+    int i = baixo - 1;
+
+    for (int j = baixo; j < alto; ++j) {
+        if (vetor[j] <= pivô) {
+            ++i;
+            std::swap(vetor[i], vetor[j]);
         }
+    }
+    std::swap(vetor[i + 1], vetor[alto]);
+    return i + 1;
+}
+
+void Grafo:: quickSortGrafo(std::vector<int>& vetor, int baixo, int alto) {
+    if (baixo < alto) {
+        int pivoIndex = particionar(vetor, baixo, alto); 
+        quickSortGrafo(vetor, baixo, pivoIndex - 1);
+        quickSortGrafo(vetor, pivoIndex + 1, alto); 
     }
 }
 
 void Grafo:: forwardStar(std::vector<int>& origem, std::vector <int> & destino){
-    bubbleSortGrafo(origem);
+    quickSortGrafo(origem, 0, origem.size() - 1);
+
     int n = origem.size();
     numSucessores = 0;
     for (int indice = 0; indice < n; indice++){
@@ -71,7 +80,7 @@ void Grafo:: forwardStar(std::vector<int>& origem, std::vector <int> & destino){
 }
 
 void Grafo:: backwardStar(std::vector<int>& origem, std::vector <int> & destino){
-    bubbleSortGrafo(destino);
+    quickSortGrafo(destino, 0, destino.size() -1);
     int n = origem.size();
     numAntecessores = 0;
     for (int indice = 0; indice < n; indice++){

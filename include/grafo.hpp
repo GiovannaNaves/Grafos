@@ -22,7 +22,8 @@ private:
 public:
     Grafo(const std::string& filename, int vertice);
     void carregarGrafo(const std::string& filename);
-    void bubbleSortGrafo(std::vector<int>& vetor);
+    int particionar(std::vector<int>& vetor, int baixo, int alto);
+    void quickSortGrafo(std::vector<int>& vetor, int baixo, int alto);
     void forwardStar (std::vector<int>& origem, std::vector <int> & destino);
     void backwardStar (std::vector<int>& origem, std::vector <int> & destino);
 };
