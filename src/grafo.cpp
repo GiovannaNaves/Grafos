@@ -49,6 +49,7 @@ int Grafo::particionar(std::vector<int>& vetor, std::vector<int>& vetor2, int ba
         if (vetor[j] <= pivô) {
             ++i;
             std::swap(vetor[i], vetor[j]);
+            std::swap(vetor2[i], vetor2[j]);
         }
     }
     std::swap(vetor[i + 1], vetor[alto]);
@@ -89,7 +90,7 @@ void Grafo:: backwardStar(std::vector<int>& origem, std::vector <int> & destino)
             antecessores.push_back(origem[indice]);
             numAntecessores++;
         }
-        if(destino[indice] != destino[indice-1]){
+        if(indice == 0 || destino[indice] != destino[indice - 1]){
             pointerBS.push_back(indice);
         }
     };
