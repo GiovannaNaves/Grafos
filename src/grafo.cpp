@@ -41,7 +41,7 @@ void Grafo::carregarGrafo(const std::string& filename) {
 
 }
 
-int Grafo::particionar(std::vector<int>& vetor, int baixo, int alto) {
+int Grafo::particionar(std::vector<int>& vetor, std::vector<int>& vetor2, int baixo, int alto) {
     int pivô = vetor[alto];
     int i = baixo - 1;
 
@@ -52,19 +52,20 @@ int Grafo::particionar(std::vector<int>& vetor, int baixo, int alto) {
         }
     }
     std::swap(vetor[i + 1], vetor[alto]);
+    std::swap(vetor2[i + 1], vetor2[alto]);
     return i + 1;
 }
 
-void Grafo:: quickSortGrafo(std::vector<int>& vetor, int baixo, int alto) {
+void Grafo:: quickSortGrafo(std::vector<int>& vetor, std::vector<int>& vetor2, int baixo, int alto) {
     if (baixo < alto) {
-        int pivoIndex = particionar(vetor, baixo, alto); 
-        quickSortGrafo(vetor, baixo, pivoIndex - 1);
-        quickSortGrafo(vetor, pivoIndex + 1, alto); 
+        int pivoIndex = particionar(vetor, vetor2, baixo, alto); 
+        quickSortGrafo(vetor, vetor2, baixo, pivoIndex - 1);
+        quickSortGrafo(vetor, vetor2, pivoIndex + 1, alto); 
     }
 }
 
 void Grafo:: forwardStar(std::vector<int>& origem, std::vector <int> & destino){
-    quickSortGrafo(origem, 0, origem.size() - 1);
+    quickSortGrafo(origem, destino, 0, origem.size() - 1);
 
     int n = origem.size();
     numSucessores = 0;
@@ -80,7 +81,7 @@ void Grafo:: forwardStar(std::vector<int>& origem, std::vector <int> & destino){
 }
 
 void Grafo:: backwardStar(std::vector<int>& origem, std::vector <int> & destino){
-    quickSortGrafo(destino, 0, destino.size() -1);
+    quickSortGrafo(destino, origem, 0, destino.size() -1);
     int n = origem.size();
     numAntecessores = 0;
     for (int indice = 0; indice < n; indice++){
@@ -89,7 +90,7 @@ void Grafo:: backwardStar(std::vector<int>& origem, std::vector <int> & destino)
             numAntecessores++;
         }
         if(destino[indice] != destino[indice-1]){
-        pointerBS.push_back(indice);
+            pointerBS.push_back(indice);
         }
     };
 }
