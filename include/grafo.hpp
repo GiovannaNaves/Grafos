@@ -14,7 +14,8 @@ private:
     int numAntecessores;
     std::vector<int> origem;
     std::vector<int> destino;
-    std::vector<int> pointer;
+    std::vector<int> pointerFS;
+    std::vector<int> pointerBS;
     std::vector<int> sucessores;
     std::vector<int> antecessores;
 

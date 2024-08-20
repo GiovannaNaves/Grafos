@@ -9,7 +9,7 @@ int main() {
     int v;
 
     cout << "Digite o nome do arquivo: ";
-    cin >> filename;
+    cin >> filename >> v;
 
     Grafo grafo(filename, v);
 
