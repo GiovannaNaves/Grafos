@@ -7,6 +7,7 @@
 
 class Grafo {
 private:
+    int vertice;
     int numVertices;
     int numArestas;
     int numSucessores;
@@ -22,6 +23,7 @@ public:
     void carregarGrafo(const std::string& filename);
     void bubbleSortGrafo(std::vector<int>& vetor);
     void forwardStar (std::vector<int>& origem, std::vector <int> & destino);
+    void backwardStar (std::vector<int>& origem, std::vector <int> & destino);
 };
 
 #endif

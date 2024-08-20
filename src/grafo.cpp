@@ -3,8 +3,9 @@
 #include <fstream>
 #include <iostream>
 
-Grafo::Grafo(const std::string& filename, int vertice) {
+Grafo::Grafo(const std::string& filename, int v) {
     carregarGrafo(filename);
+    vertice = v;
 }
 
 void Grafo::carregarGrafo(const std::string& filename) {
@@ -18,6 +19,9 @@ void Grafo::carregarGrafo(const std::string& filename) {
     file >> numVertices >> numArestas;
     origem.resize(numArestas);
     destino.resize(numArestas);
+    sucessores.resize(numArestas);
+    antecessores.resize(numArestas);
+    pointer.resize(numArestas);
 
     for (int i = 0; i < numArestas; ++i) {
         file >> origem[i] >> destino[i];
@@ -25,6 +29,7 @@ void Grafo::carregarGrafo(const std::string& filename) {
 
     file.close();
     forwardStar(origem, destino);
+    backwardStar(origem, destino);
 }
 
 void Grafo:: bubbleSortGrafo(std::vector<int>& vetor) {
@@ -38,7 +43,6 @@ void Grafo:: bubbleSortGrafo(std::vector<int>& vetor) {
             }
         }
     }
-
 }
 
 void Grafo:: forwardStar(std::vector<int>& origem, std::vector <int> & destino){
@@ -46,12 +50,35 @@ void Grafo:: forwardStar(std::vector<int>& origem, std::vector <int> & destino){
     int n = origem.size();
     int it = 0;
     int indice = 0;
+    int indiceSucessores = 0;
     for (indice = 0; indice <= n; indice++){
+        if (origem[indice] == vertice){
+            sucessores[indiceSucessores] = destino[indice];
+            indiceSucessores++;
+        }
         if(origem[indice] == origem[indice-1]){
         } else {
         pointer[it] = indice;
         it++;
         }
     };
+}
 
+void Grafo:: backwardStar(std::vector<int>& origem, std::vector <int> & destino){
+    bubbleSortGrafo(destino);
+    int n = origem.size();
+    int it = 0;
+    int indice = 0;
+    int indiceAntecessores = 0;
+    for (indice = 0; indice <= n; indice++){
+        if (destino[indice] == vertice){
+            antecessores[indiceAntecessores] = origem[indice];
+            indiceAntecessores++;
+        }
+        if(destino[indice] == destino[indice-1]){
+        } else {
+        pointer[it] = indice;
+        it++;
+        }
+    };
 }

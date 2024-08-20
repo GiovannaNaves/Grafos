@@ -6,12 +6,12 @@ using namespace std;
 
 int main() {
     string filename;
-    int vertice;
+    int v;
 
     cout << "Digite o nome do arquivo: ";
     cin >> filename;
 
-    Grafo grafo(filename, vertice);
+    Grafo grafo(filename, v);
 
     return 0;
 }
