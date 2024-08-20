@@ -9,13 +9,19 @@ class Grafo {
 private:
     int numVertices;
     int numArestas;
+    int numSucessores;
+    int numAntecessores;
     std::vector<int> origem;
     std::vector<int> destino;
+    std::vector<int> pointer;
+    std::vector<int> sucessores;
+    std::vector<int> antecessores;
 
 public:
-    Grafo(const std::string& filename);
+    Grafo(const std::string& filename, int vertice);
     void carregarGrafo(const std::string& filename);
     void bubbleSortGrafo(std::vector<int>& vetor);
+    void forwardStar (std::vector<int>& origem, std::vector <int> & destino);
 };
 
 #endif

@@ -3,7 +3,7 @@
 #include <fstream>
 #include <iostream>
 
-Grafo::Grafo(const std::string& filename) {
+Grafo::Grafo(const std::string& filename, int vertice) {
     carregarGrafo(filename);
 }
 
@@ -24,11 +24,7 @@ void Grafo::carregarGrafo(const std::string& filename) {
     }
 
     file.close();
-    bubbleSortGrafo(origem);
-        for (int elemento : origem) {
-        std::cout << elemento << " ";
-    }
-
+    forwardStar(origem, destino);
 }
 
 void Grafo:: bubbleSortGrafo(std::vector<int>& vetor) {
@@ -45,3 +41,17 @@ void Grafo:: bubbleSortGrafo(std::vector<int>& vetor) {
 
 }
 
+void Grafo:: forwardStar(std::vector<int>& origem, std::vector <int> & destino){
+    bubbleSortGrafo(origem);
+    int n = origem.size();
+    int it = 0;
+    int indice = 0;
+    for (indice = 0; indice <= n; indice++){
+        if(origem[indice] == origem[indice-1]){
+        } else {
+        pointer[it] = indice;
+        it++;
+        }
+    };
+
+}
