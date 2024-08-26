@@ -1,4 +1,3 @@
-// grafo.cpp
 #include "grafo.hpp"
 #include <fstream>
 #include <iostream>
@@ -45,18 +44,15 @@ void Grafo::carregarGrafo(const std::string& filename) {
 }
 
 void Grafo::sortGrafo(std::vector<int>& origem, std::vector<int>& destino) {
-    // Combinar origem e destino em um vetor de pares
     std::vector<std::pair<int, int>> combinados;
     for (size_t i = 0; i < origem.size(); ++i) {
         combinados.push_back({origem[i], destino[i]});
     }
 
-    // Ordenar o vetor de pares baseado no primeiro valor (origem)
     std::sort(combinados.begin(), combinados.end(), [](const std::pair<int, int>& a, const std::pair<int, int>& b) {
         return a.first < b.first;
     });
 
-    // Separar os pares de volta nos vetores origem e destino
     for (size_t i = 0; i < combinados.size(); ++i) {
         origem[i] = combinados[i].first;
         destino[i] = combinados[i].second;

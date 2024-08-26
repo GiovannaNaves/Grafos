@@ -1,4 +1,3 @@
-// grafo.hpp
 #ifndef GRAFO_H
 #define GRAFO_H
 

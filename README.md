@@ -1,3 +1,3 @@
-Giovanna Nave Ribeiro
+Giovanna Naves Ribeiro
 
-Compilar com "make"
+Compilar com "make".
