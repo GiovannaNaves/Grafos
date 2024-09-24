@@ -30,16 +30,16 @@ void Grafo::DFS(int v, int x) {
     for (int u : adj[v]) {
         if (tempoDescoberta[u] == 0) {
             if (v == x) {
-                cout << "Árvore: " << x << ", " << u << endl;
+                cout << "Árvore: (" << x << ", " << u << ")"<< endl;
             }
             DFS(u, x);
         } else if (v == x) {
             if (tempoDescoberta[u] > 0 && tempoTermino[u] == 0) {
-                cout << "Retorno: " << x << ", " << u << endl;
+                cout << "Retorno: (" << x << ", " << u << ")"<< endl;
             } else if (tempoDescoberta[u] > tempoDescoberta[v]) {
-                cout << "Avanço: " << x << ", " << u << endl;
+                cout << "Avanço: (" << x << ", " << u << ")"<< endl;
             } else {
-                cout << "Cruzamento: " << x << ", " << u << endl;
+                cout << "Cruzamento: (" << x << ", " << u << ")"<< endl;
             }
         }
     }
