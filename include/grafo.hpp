@@ -1,29 +1,23 @@
-#ifndef GRAFO_H
-#define GRAFO_H
+#ifndef GRAFO_HPP
+#define GRAFO_HPP
 
 #include <vector>
-#include <string>
+using namespace std;
 
 class Grafo {
 private:
-    int vertice;
-    int numVertices;
-    int numArestas;
-    int numSucessores;
-    int numAntecessores;
-    std::vector<int> origem;
-    std::vector<int> destino;
-    std::vector<int> pointerFS;
-    std::vector<int> pointerBS;
-    std::vector<int> sucessores;
-    std::vector<int> antecessores;
+    int V; 
+    vector<vector<int>> adj; 
+    vector<int> tempoDescoberta; 
+    vector<int> tempoTermino; 
+    int tempo; 
 
 public:
-    Grafo(const std::string& filename, int vertice);
-    void carregarGrafo(const std::string& filename);
-    void sortGrafo(std::vector<int>& vetor, std::vector<int>& vetor2);
-    void forwardStar (std::vector<int>& origem, std::vector <int> & destino);
-    void backwardStar (std::vector<int>& origem, std::vector <int> & destino);
+    Grafo(int V);
+    void adicionaAresta(int v, int w);
+    void ordenaAdjacencias();
+    void DFS(int v, int x);
+    void iniciaDFS(int verticeInicial);
 };
 
 #endif

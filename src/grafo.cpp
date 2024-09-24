@@ -1,91 +1,59 @@
 #include "grafo.hpp"
-#include <fstream>
 #include <iostream>
-#include <vector>
 #include <algorithm>
-#include <utility>
 
-Grafo::Grafo(const std::string& filename, int v) {
-    vertice = v;
-    carregarGrafo(filename);
+using namespace std;
+
+Grafo::Grafo(int V) {
+    this->V = V;
+    adj.resize(V);
+    tempoDescoberta.resize(V, 0);
+    tempoTermino.resize(V, 0);
+    tempo = 0;
 }
 
-void Grafo::carregarGrafo(const std::string& filename) {
-    std::ifstream file(filename);
-
-    if (!file.is_open()) {
-        std::cerr << "Erro ao abrir o arquivo: " << filename << std::endl;
-        return;
-    }
-
-    file >> numVertices >> numArestas;
-    origem.resize(numArestas);
-    destino.resize(numArestas);
-
-    for (int i = 0; i < numArestas; ++i) {
-        file >> origem[i] >> destino[i];
-    }
-
-    file.close();
-    forwardStar(origem, destino);
-    backwardStar(origem, destino);
-
-    std::cout << "Sucessores = " << numSucessores << std::endl;
-    std::cout << "Antecessores = " <<numAntecessores << std::endl;
-    for (int elemento : sucessores) {
-        std::cout << elemento << " ";
-    }    
-    std::cout << std::endl;
-    for (int elemento : antecessores) {
-        std::cout << elemento << " ";
-    }
-    std::cout << std::endl;
-
+void Grafo::adicionaAresta(int v, int w) {
+    adj[v].push_back(w);
+    adj[w].push_back(v);
 }
 
-void Grafo::sortGrafo(std::vector<int>& origem, std::vector<int>& destino) {
-    std::vector<std::pair<int, int>> combinados;
-    for (size_t i = 0; i < origem.size(); ++i) {
-        combinados.push_back({origem[i], destino[i]});
-    }
-
-    std::sort(combinados.begin(), combinados.end(), [](const std::pair<int, int>& a, const std::pair<int, int>& b) {
-        return a.first < b.first;
-    });
-
-    for (size_t i = 0; i < combinados.size(); ++i) {
-        origem[i] = combinados[i].first;
-        destino[i] = combinados[i].second;
+void Grafo::ordenaAdjacencias() {
+    for (int i = 0; i < V; i++) {
+        sort(adj[i].begin(), adj[i].end());
     }
 }
 
-void Grafo:: forwardStar(std::vector<int>& origem, std::vector <int> & destino){
-    sortGrafo(origem, destino);
+void Grafo::DFS(int v, int x) {
+    tempo++;
+    tempoDescoberta[v] = tempo;
 
-    int n = origem.size();
-    numSucessores = 0;
-    for (int indice = 0; indice < n; indice++){
-        if (origem[indice] == vertice){
-            sucessores.push_back(destino[indice]);
-            numSucessores++;
+    for (int u : adj[v]) {
+        if (tempoDescoberta[u] == 0) {
+            if (v == x) {
+                cout << "Árvore: " << x << ", " << u << endl;
+            }
+            DFS(u, x);
+        } else if (v == x) {
+            if (tempoDescoberta[u] > 0 && tempoTermino[u] == 0) {
+                cout << "Retorno: " << x << ", " << u << endl;
+            } else if (tempoDescoberta[u] > tempoDescoberta[v]) {
+                cout << "Avanço: " << x << ", " << u << endl;
+            } else {
+                cout << "Cruzamento: " << x << ", " << u << endl;
+            }
         }
-        if(indice == 0 || origem[indice] != origem[indice-1]){
-            pointerFS.push_back(indice);
-        }
-    };
+    }
+
+    tempo++;
+    tempoTermino[v] = tempo;
 }
 
-void Grafo:: backwardStar(std::vector<int>& origem, std::vector <int> & destino){
-    sortGrafo(destino, origem);
-    int n = origem.size();
-    numAntecessores = 0;
-    for (int indice = 0; indice < n; indice++){
-        if (destino[indice] == vertice){
-            antecessores.push_back(origem[indice]);
-            numAntecessores++;
+void Grafo::iniciaDFS(int x) {
+    ordenaAdjacencias();
+
+    for (int i = 0; i < V; i++) {
+        if (tempoDescoberta[i] == 0) {
+            DFS(i, x); 
         }
-        if(indice == 0 || destino[indice] != destino[indice - 1]){
-            pointerBS.push_back(indice);
-        }
-    };
+    }
 }
